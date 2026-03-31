@@ -1,0 +1,666 @@
+{
+  "info": {
+    "_postman_id": "7c626d26-997f-4d64-854a-b9d7bc0e77dd",
+    "name": "Airport Gap -API Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53621377",
+    "_collection_link": "https://go.postman.co/collection/53621377-7c626d26-997f-4d64-854a-b9d7bc0e77dd?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Aeropuertos",
+      "item": [
+        {
+          "name": "GET aeropoerto por ID - Positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200\", function() {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"El aeropuerto es KIX\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.id).to.equal(\"KIX\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Tiene nombre y país\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.attributes).to.have.property(\"name\");\r",
+                  "    pm.expect(body.data.attributes).to.have.property(\"country\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/airports/KIX",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "airports",
+                "KIX"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "GET aeropoerto por ID - Positivo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/airports/KIX",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "airports",
+                    "KIX"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": null,
+              "header": [
+                {
+                  "key": ":status",
+                  "value": 200
+                },
+                {
+                  "key": "cache-control",
+                  "value": "max-age=0, private, must-revalidate"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json; charset=utf-8"
+                },
+                {
+                  "key": "date",
+                  "value": "Tue, 31 Mar 2026 20:11:56 GMT"
+                },
+                {
+                  "key": "etag",
+                  "value": "W/\"a6ac2e9aab7ab43fd62d9aaff62fcc33\""
+                },
+                {
+                  "key": "referrer-policy",
+                  "value": "strict-origin-when-cross-origin"
+                },
+                {
+                  "key": "strict-transport-security",
+                  "value": "max-age=63072000; includeSubDomains"
+                },
+                {
+                  "key": "vary",
+                  "value": "Accept, Origin"
+                },
+                {
+                  "key": "x-cache",
+                  "value": "miss"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "SAMEORIGIN"
+                },
+                {
+                  "key": "x-permitted-cross-domain-policies",
+                  "value": "none"
+                },
+                {
+                  "key": "x-request-id",
+                  "value": "5b37f96c-bb7b-4896-9b59-bd05f9a15337"
+                },
+                {
+                  "key": "x-runtime",
+                  "value": "0.002104"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "content-length",
+                  "value": "237"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"data\": {\n        \"id\": \"KIX\",\n        \"type\": \"airport\",\n        \"attributes\": {\n            \"name\": \"Kansai International Airport\",\n            \"city\": \"Osaka\",\n            \"country\": \"Japan\",\n            \"iata\": \"KIX\",\n            \"icao\": \"RJBB\",\n            \"latitude\": \"34.427299\",\n            \"longitude\": \"135.244003\",\n            \"altitude\": 26,\n            \"timezone\": \"Asia/Tokyo\"\n        }\n    }\n}"
+            }
+          ]
+        },
+        {
+          "name": "get aeropuertos",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200\", function() {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"El body tiene propiedad data\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body).to.have.property(\"data\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"data es un array con aeropuertos\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data).to.be.an(\"array\");\r",
+                  "    pm.expect(body.data.length).to.be.greaterThan(0);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Cada aeropuerto tiene id, nombre y ciudad\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    const primero = body.data[0];\r",
+                  "    pm.expect(primero).to.have.property(\"id\");\r",
+                  "    pm.expect(primero.attributes).to.have.property(\"name\");\r",
+                  "    pm.expect(primero.attributes).to.have.property(\"city\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Responde en menos de 2 segundos\", function() {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/airports",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "airports"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET aeropuertos por ID - Negativo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 404\", function() {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/airports/NOEXISTE",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "airports",
+                "NOEXISTE"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Favoritos",
+      "item": [
+        {
+          "name": "POST Agregar favorito - positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 201\", function() {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"El favorito fue creado con nota\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.attributes).to.have.property(\"note\");\r",
+                  "    pm.expect(body.data.attributes.note)\r",
+                  "      .to.equal(\"Mi aeropuerto favorito en Japón\");\r",
+                  "});\r",
+                  "\r",
+                  "// Guardar el ID del favorito para usarlo en PATCH y DELETE\r",
+                  "pm.test(\"Guardar ID del favorito\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.environment.set(\"favorite_id\", body.data.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"airport_id\": \"KIX\",\r\n  \"note\": \"Mi aeropuerto favorito en Japón\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "favorites"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "PATCH Actualizar favorito - positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code es 200\", function() {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"La nota fue actualizada\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.attributes.note)\r",
+                  "      .to.equal(\"Nota actualizada desde Postman\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"note\": \"Nota actualizada desde Postman\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites/{{favorite_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "favorites",
+                "{{favorite_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE Eliminar favorito - Positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites/{{favorite_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "favorites",
+                "{{favorite_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST agregar favoritos- Negativo sin token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Sin token 401\", function () {\r",
+                  "    pm.expect(pm.response.code).to.eql(401); \r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Se cuenta con mensaje de error\", function(){\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body).to.have.property(\"errors\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"airport_id\": \"KIX\",\r\n    \"note\": \"test sin token\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "favorites"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE favorito - Negativo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Id inexistente devuelve 404\", function(){\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"airport_id\": \"KIX\",\r\n    \"note\": \"test sin token\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/favorites/99999",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "favorites",
+                "99999"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Distancia",
+      "item": [
+        {
+          "name": "POST Calcular distancia - Positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function(){\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Devuelve distancia en millas y kilómetros\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.attributes).to.have.property(\"miles\");\r",
+                  "    pm.expect(body.data.attributes).to.have.property(\"kilometers\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"La distancia es un número positivo\", function(){\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body.data.attributes.miles).to.be.a('number');\r",
+                  "    pm.expect(body.data.attributes.miles).to.be.greaterThan(0);\r",
+                  "    pm.expect(body.data.attributes.kilometers).to.be.a('number');\r",
+                  "    pm.expect(body.data.attributes.kilometers).to.be.greaterThan(0);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"from\": \"BOG\",\r\n    \"to\": \"KIX\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/airports/distance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "airports",
+                "distance"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST Calcular distancia invalida - Negativo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Error al calcular la distancia, aeropuerto desconocido\", function(){\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"from\": \"XXX\",\r\n    \"to\": \"KIX\"\r\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/airports/distance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "airports",
+                "distance"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tokens",
+      "item": [
+        {
+          "name": "POST token - Negativo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Password incorrecto devuelve error\", function() {\r",
+                  "    pm.response.to.have.status(401);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"No devuelve token\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body).to.not.have.property(\"token\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"a@gmail.com\",\r\n    \"password\": \"passwordIncorrecto123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tokens"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
