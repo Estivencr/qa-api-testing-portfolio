@@ -1,0 +1,39 @@
+name: Airport Gap — API Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar Newman
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-htmlextra
+
+      - name: Ejecutar tests
+        run: |
+          newman run airport-gap-tests.json \
+            -e "Airport Gap QA.postman_environment.json" \
+            -r htmlextra \
+            --reporter-htmlextra-export reporte.html
+
+      - name: Publicar reporte
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: reporte-api-tests
+          path: reporte.html
