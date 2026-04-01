@@ -24,6 +24,25 @@ jobs:
           npm install -g newman
           npm install -g newman-reporter-htmlextra
 
+      - name: Crear environment con token secreto
+        run: |
+          echo '{
+            "id": "airport-gap-env",
+            "name": "Airport Gap QA",
+            "values": [
+              {
+                "key": "base_url",
+                "value": "https://airportgap.com/api",
+                "enabled": true
+              },
+              {
+                "key": "token",
+                "value": "${{ secrets.AIRPORT_GAP_TOKEN }}",
+                "enabled": true
+              }
+            ]
+          }' > environment.json
+
       - name: Ejecutar tests
         run: |
           newman run airport-gap-tests.json \
