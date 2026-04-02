@@ -1,5 +1,4 @@
-![API Tests]([https://github.com/Estivencr/qa-api-testing-portfolio/actions/workflows/api-test.yml/badge.svg)
-
+[![API Tests](https://github.com/Estivencr/qa-api-testing-portfolio/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Estivencr/qa-api-testing-portfolio/actions)
 # QA API Testing 
 
 Colección de pruebas de API desarrolladas con Postman
