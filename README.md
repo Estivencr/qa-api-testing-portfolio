@@ -1,4 +1,4 @@
-![API Tests](https://github.com/Estivencr/qa-api-testing-portfolio/actions/workflows/api-tests.yml/badge.svg)
+![API Tests]([https://github.com/Estivencr/qa-api-testing-portfolio/actions/workflows/api-test.yml/badge.svg)
 
 # QA API Testing 
 
