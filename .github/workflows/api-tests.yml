@@ -28,7 +28,7 @@ jobs:
       - name: Verificar que el secreto existe
         run: test -n "$TOKEN" || (echo "❌ Falta el secreto AIRPORT_GAP_TOKEN" && exit 1)
         env:
-          TOKEN: ${{ secrets.TOKEN_FALSO }}
+          TOKEN: ${{ secrets.AIRPORT_GAP_TOKEN }}
 
       - name: Ejecutar tests
         run: |
