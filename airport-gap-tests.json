@@ -50,7 +50,8 @@
                 "airports",
                 "KIX"
               ]
-            }
+            },
+            "description": "\\## GET aeropuerto por ID (positivo)  \n\\### PropósitoObtiene el detalle de un aeropuerto específico a partir de su **ID/IATA**.  \n\\### Endpoint\\`GET {{base_url}}/airports/:id\\`  \nEn esta request el \\`:id\\` está seteado como ejemplo a \\`KIX\\` en la URL actual.  \n\\### AutenticaciónUsa token Bearer:- Variable: \\`{{token}}\\`- Header esperado: - \\`Authorization: Bearer {{token}}\\`  \n\\> Nota: si el header no está explícito en la request, puede venir heredado a nivel de colección/carpeta.  \n\\### Variables usadas- \\`{{base_url}}\\`: URL base del API.- \\`{{token}}\\`: token JWT/Bearer para autenticación.- \\`{{favorite_id}}\\`: ID de aeropuerto reutilizable (si decides parametrizar el path con esta variable).  \n\\### Parámetros**Path**\\- \\`id\\` (string, requerido): identificador del aeropuerto (ej: \\`KIX\\`, \\`JFK\\`, etc.).  \n\\### Respuesta esperada (200)Devuelve un objeto con la información del aeropuerto (estructura tipo JSON:API), por ejemplo:- \\`data.id\\` (string)- \\`data.type\\` (string, normalmente \\`airport\\`)- \\`data.attributes\\` (objeto con campos como nombre, ciudad, país, etc.)  \n\\### Ejemplo cURL\\`\\`\\`bashcurl --request GET \"{{base_url}}/airports/KIX\" \\\\ --header \"Authorization: Bearer {{token}}\" \\\\ --header \"Accept: application/json\"EndFragment"
           },
           "response": [
             {
@@ -197,7 +198,8 @@
               "path": [
                 "airports"
               ]
-            }
+            },
+            "description": "StartFragmentObtiene la lista paginada de todos los aeropuertos.  \nNo requiere autenticación.  \nParámetros: ?page=N para paginación.EndFragment"
           },
           "response": []
         },
@@ -299,7 +301,8 @@
               "path": [
                 "favorites"
               ]
-            }
+            },
+            "description": "StartFragmentAgrega un aeropuerto a la lista de favoritos del usuario.  \nRequiere autenticación con Bearer token.  \nBody: { \"airport_id\": \"KIX\", \"note\": \"descripción opcional\" }  \nDevuelve 201 con el favorito creado incluyendo su ID.EndFragment"
           },
           "response": []
         },
@@ -357,7 +360,8 @@
                 "favorites",
                 "{{favorite_id}}"
               ]
-            }
+            },
+            "description": "StartFragmentActualiza la nota de un favorito existente.  \nRequiere autenticación con Bearer token.  \nDevuelve 200 con el favorito actualizado.EndFragment"
           },
           "response": []
         },
@@ -404,7 +408,8 @@
                 "favorites",
                 "{{favorite_id}}"
               ]
-            }
+            },
+            "description": "StartFragmentElimina un favorito de la lista del usuario.  \nRequiere autenticación con Bearer token.  \nDevuelve 204 sin contenido.EndFragment"
           },
           "response": []
         },
@@ -482,7 +487,7 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "DELETE",
             "header": [],
             "body": {
               "mode": "raw",
@@ -558,7 +563,8 @@
                 "airports",
                 "distance"
               ]
-            }
+            },
+            "description": "StartFragmentCalcula la distancia entre dos aeropuertos.  \nRequiere autenticación con Bearer token.  \nBody: { \"from\": \"BOG\", \"to\": \"KIX\" }  \nDevuelve distancia en millas y kilómetros.  \nDevuelve 422 si algún código de aeropuerto no existe.EndFragment"
           },
           "response": []
         },
@@ -641,12 +647,50 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"email\": \"a@gmail.com\",\r\n    \"password\": \"passwordIncorrecto123\"\r\n}",
+              "raw": "{\r\n    \"email\": \" aslin@gmail.com\",\r\n    \"password\": \"passwordIncorrecto123\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{base_url}}/tokens",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "tokens"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST token - Positivo",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Guardar token automáticamente\", function() {\r",
+                  "    const body = pm.response.json();\r",
+                  "    pm.expect(body).to.have.property(\"token\");\r",
+                  "    pm.environment.set(\"token\", body.token);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"aslin@gmail.com\",\r\n    \"password\": \"1037\"\r\n}"
             },
             "url": {
               "raw": "{{base_url}}/tokens",
